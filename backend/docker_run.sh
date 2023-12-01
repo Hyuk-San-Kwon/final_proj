@@ -1,0 +1,1 @@
+docker run --device=/dev/video0:/dev/video0 --gpus all --rm -it -v $(pwd):/opt/project grad:0.02 

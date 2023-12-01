@@ -1,17 +1,16 @@
 import cv2
 import time
 import os
-from infer import infer_frame
+from infer import Predictor
 from loguru import logger
 
 def get_stream_video():
     # camera 정의
     cap = cv2.VideoCapture(0)
-    width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)  # float
-    height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)  # float
-    fps = cap.get(cv2.CAP_PROP_FPS)
-    
     inputs = 0
+    
+    predictor = Predictor(device='cpu', fp16=False)
+    
     while True:
         # 카메라 값 불러오기
         success, frame = cap.read()
@@ -19,8 +18,7 @@ def get_stream_video():
             logger.info("Cam Error Occured!")
             break
         else:
-            inputs, outputs = infer_frame(frame, inputs)
-            logger.info(outputs)
+            output = predictor.infer_frame(frame)
             ret, buffer = cv2.imencode('.jpg', frame)                       
             # frame을 byte로 변경 후 특정 식??으로 변환 후에
             # yield로 하나씩 넘겨준다.
