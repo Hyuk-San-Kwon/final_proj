@@ -34,3 +34,6 @@ def get_video(style: str, file: UploadFile = File(...)):
     
     input_file_name = save_video(file)
     infer(input_file_name)
+    
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8080)

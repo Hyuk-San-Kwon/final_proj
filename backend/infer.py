@@ -21,16 +21,15 @@ cuda_providers = [
 ]
 tensorrt_providers = [
     ('TensorrtExecutionProvider', {
-        'device_id': 1,
+        'device_id': 0,
     }),
 ]
 tensorrt_fp16_providers = [
     ('TensorrtExecutionProvider', {
-        'device_id': 1,
+        'device_id': 0,
         'trt_fp16_enable': True,
     }),
 ]
-# onnx.checker.check_model(onnx_model)
 
 class Predictor(object):
     def __init__(
@@ -43,8 +42,8 @@ class Predictor(object):
         self.providers = {"CUDA": cuda_providers, "TensorRT": tensorrt_providers, "TensorRT-fp16": tensorrt_fp16_providers}
         self.test_size = (224, 224)
         onnx_model = onnx.load("KSLmodel_resnet50.onnx")
-        self.key = "TensorRT-fp16"
-        self.model = onnxruntime.InferenceSession("KSLmodel_resnet50.onnx", providers=self.providers[self.key])
+        self.key = "TensorRT"
+        self.model = onnxruntime.InferenceSession("KSLmodel_resnet50.onnx", providers=self.providers["CUDA"])#providers=self.providers[self.key])
         
 
     def preproc(self, img, input_size, swap=(2, 0, 1)):

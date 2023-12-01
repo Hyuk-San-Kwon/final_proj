@@ -1,0 +1,12 @@
+numpy
+cython
+torch>=1.7
+opencv_python
+loguru
+uvicorn
+onnxruntime==1.14
+onnxruntime-gpu
+fastapi
+uvicorn
+python-multipart
+onnx
