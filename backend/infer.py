@@ -85,7 +85,7 @@ class Predictor(object):
         img = self.preproc(img, self.test_size)
         img = torch.from_numpy(img[0]).unsqueeze(0)
         
-        img = img.float().cuda()
+        img = img.float()#.cuda()
         outputs = None
         img = img.unsqueeze(0)
         ort_inputs = {self.model.get_inputs()[0].name: self.to_numpy(img)}
@@ -96,7 +96,7 @@ class Predictor(object):
         logger.info("Infer time: {:.4f}s".format(infer_time))
         time_means += infer_time
         cnt += 1
-        logger.info("Infer mean time : {:.4f}s".format(time_means / cnt))
+        # logger.info("Infer mean time : {:.4f}s".format(time_means / cnt))
     
         return outputs
         

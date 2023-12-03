@@ -19,13 +19,16 @@ def get_stream_video():
             break
         else:
             output = predictor.infer_frame(frame)
-            ret, buffer = cv2.imencode('.jpg', frame)                       
+            # ret, buffer = cv2.imencode('.jpg', frame)                       
             # frame을 byte로 변경 후 특정 식??으로 변환 후에
             # yield로 하나씩 넘겨준다.
-            frame = buffer.tobytes()
-            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' +
-               bytearray(frame) + b'\r\n')
-
+            logger.info(output[0][0])
+            yield output[0][0]
+            # frame = buffer.tobytes()
+            # yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' +
+            #    bytearray(frame) + b'\r\n')
+            # yield (bytearray(output[0]) + b'\r\n')
+            
 def save_video(file):
     
     cap = file.file
